@@ -63,7 +63,9 @@
 </template>
 
 <script>
+import axios from "@/services/axios";
 export default {
+  name: "Login",
   data() {
     return {
       username: "",
@@ -72,12 +74,22 @@ export default {
     };
   },
   methods: {
+    // Função para enviar os dados de login
     submitLogin() {
-      console.log("Login submetido:", {
+      const loginData = {
         username: this.username,
         password: this.password,
         remember: this.remember,
-      });
+      };
+
+      axios
+        .post("/login", loginData)
+        .then((response) => {
+          console.log("Login bem-sucedido!", response.data);
+        })
+        .catch((error) => {
+          console.error("Erro no login:", error.response);
+        });
     },
   },
 };
